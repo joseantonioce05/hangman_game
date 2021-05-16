@@ -44,6 +44,13 @@ def game(word, hidden_word):
         print(word_user)
         if word == word_user:
             c = 1
+    option = int(input("Quieres jugar de nuevo? \n 1. Si \n 2. No"))
+        if option == 1:
+            return run()
+        elif option == 2:
+            return 0
+        else:
+            print("Opcion incorrecta")
 
 def run():
     word = extract_word()
