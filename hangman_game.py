@@ -1,9 +1,5 @@
-# Incorpora comprehensions, manejos de errores y manejo de archivos
-# Utiliza el archivo data.txt y leelo para obtener las palabras
-# enumarate
-# get en diccionario
-# La sentencia os.system("cls") o os.system("clear") para limpiar la terminal
 import random
+import os
 
 
 def extract_word():
@@ -11,53 +7,61 @@ def extract_word():
     with open("./files/data.txt", "r", encoding="utf-8") as f:
         for line in f:
             list_word.append(line)
-    w = list_word[random.randint(0, 171)]
-    w = w[0:len(w) - 1]
-    return w
+    word = list_word[random.randint(0, 171)]
+    word = word[0:len(word) - 1]
+    return word
 
 
 def length_word(word):
     l = len(word)
-    contador = 0
+    count = 0
     hidden_word = ""
-    while contador < l:
+    while count < l:
         hidden_word += "-"
-        contador += 1
+        count += 1
     return hidden_word
 
 
+def normalize(s):
+    replacements = (("á", "a"),("é", "e"),("í", "i"),("ó", "o"),("ú", "u"))
+
+    for a, b in replacements:
+        s = s.replace(a, b).replace(a.upper(), b.upper())
+    return s
+
+
 def game(word, hidden_word): 
-    c = 0
-    rayas = list(hidden_word)
-    while c < 1:
+    count = 0
+    lines = list(hidden_word)
+    print(hidden_word)
+    while count < 1:
         i = 0
-        letter = input("Escribe una letra: ")
-        assert letter == 1, "Ingrese solo una letra"
+        letter = normalize(input("Escribe una letra: "))
+        assert len(letter) == 1, "Ingrese solo una letra"
         while i < len(word):
             if word[i] == letter:
-                print(word[i])
-                print(rayas)
-                rayas[i] = letter
-                print(rayas)
+                lines[i] = letter
             i += 1
-        word_user = "".join(rayas)
+        word_user = "".join(lines)
+        os.system("cls")
         print(word_user)
         if word == word_user:
-            c = 1
-    option = int(input("Quieres jugar de nuevo? \n 1. Si \n 2. No"))
+            count = 1
+    while count < 2:
+        option = int(input("Quieres jugar de nuevo? \n 1. Si \n 2. No \nElige una opcion: "))
         if option == 1:
             return run()
         elif option == 2:
             return 0
         else:
+            os.system("cls")
             print("Opcion incorrecta")
 
+
 def run():
-    word = extract_word()
-    print(len(word))
-    print(word)
+    os.system("cls")
+    word = normalize(extract_word())
     hidden_word = length_word(word)
-    print(hidden_word)
     game(word, hidden_word)
     
     
