@@ -7,7 +7,7 @@ def extract_word():
     with open("./files/data.txt", "r", encoding="utf-8") as f:
         for line in f:
             list_word.append(line)
-    word = list_word[random.randint(0, 171)]
+    word = list_word[random.randint(0, len(list_word))]
     word = word[0:len(word) - 1]
     return word
 
